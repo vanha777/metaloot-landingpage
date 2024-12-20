@@ -9,14 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
     "@react-three/drei": "^9.116.3",
     "@react-three/fiber": "^8.17.10",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.35",
+    "@solana/wallet-adapter-wallets": "^0.19.32",
+    "@solana/web3.js": "^1.98.0",
     "@supabase/supabase-js": "^2.46.2",
     "daisyui": "^4.12.14",
     "framer-motion": "^11.11.17",
     "next": "14.2.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.4.0",
     "three": "^0.170.0",
     "three-stdlib": "^2.34.0"
   },
