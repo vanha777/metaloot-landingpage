@@ -69,36 +69,29 @@ const cryptoAssets: CryptoAsset[] = [
         name: 'Bitcoin',
         balance: 0.25,
         price: 0.0000065,
-        icon: <FaBitcoin className="text-[#F7931A]" size={36} />
+        icon: <FaBitcoin className="text-[#F7931A]" size={24} />
     },
     {
         symbol: 'ETH',
         name: 'Ethereum',
         balance: 2.5,
         price: 0.000085,
-        icon: <FaEthereum className="text-[#627EEA]" size={36} />
+        icon: <FaEthereum className="text-[#627EEA]" size={24} />
     },
     {
         symbol: 'SOL',
         name: 'Solana',
         balance: 15.0,
         price: 0.0025,
-        icon: <SiSolana className="text-[#00FFA3]" size={36} />
+        icon: <SiSolana className="text-[#00FFA3]" size={24} />
     },
     {
         symbol: 'USDT',
         name: 'Tether',
         balance: 1000,
         price: 0.15,
-        icon: <SiTether className="text-[#26A17B]" size={24} />
+        icon: <SiTether className="text-[#26A17B]" size={20} />
     }
-    // {
-    //     symbol: 'MTL',
-    //     name: 'MetaLoot',
-    //     balance: 1250,
-    //     price: 1,
-    //     icon: <Image src="https://tzqzzuafkobkhygtccse.supabase.co/storage/v1/object/public/biz_touch/crypto-ql/MTL.png" width={36} height={36} alt="MTL" />
-    // }
 ]
 
 const vouchers: Voucher[] = [
@@ -137,8 +130,8 @@ const vouchers: Voucher[] = [
 ]
 
 const tabIcons = {
-    nfts: <FaStore size={64} />,
-    deals: <FaCoins size={64} />
+    nfts: <FaStore size={32} />,
+    deals: <FaCoins size={32} />
 }
 
 export default function Marketplace() {
@@ -171,9 +164,7 @@ export default function Marketplace() {
         setTransferMessage('Processing your claim...')
 
         try {
-            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 2000))
-
             setTransferStatus('success')
             setTransferMessage(`Successfully claimed ${voucher.title}!`)
         } catch (error) {
@@ -189,9 +180,7 @@ export default function Marketplace() {
         setTransferMessage('Preparing to swap...')
 
         try {
-            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 2000))
-
             setTransferStatus('success')
             setTransferMessage(`Successfully claimed ${crypto.name}!`)
         } catch (error) {
@@ -207,9 +196,7 @@ export default function Marketplace() {
         setTransferMessage('Processing your purchase...')
 
         try {
-            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 2000))
-
             setTransferStatus('success')
             setTransferMessage(`Successfully purchased ${nft.name}!`)
         } catch (error) {
@@ -221,18 +208,18 @@ export default function Marketplace() {
     return (
         <>
             {/* Tab Navigation */}
-            <div className="flex gap-24 mb-26 p-24">
+            <div className="flex gap-4 sm:gap-24 mb-6 sm:mb-26 p-4 sm:p-24">
                 {(['nfts', 'deals'] as const).map((tab) => (
                     <motion.button
                         key={tab}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setSelectedTab(tab)}
-                        className={`px-24 py-16 rounded-[3rem] backdrop-blur-sm relative
+                        className={`px-6 sm:px-24 py-4 sm:py-16 rounded-2xl sm:rounded-[3rem] backdrop-blur-sm relative flex-1
                 ${selectedTab === tab
-                                ? 'border-4 border-[#0CC0DF] text-[#0CC0DF] shadow-lg shadow-[#0CC0DF]/30'
-                                : 'border-2 border-white/30 text-white'} 
-                before:content-[""] before:absolute before:inset-0 before:rounded-[3rem] 
+                                ? 'border-2 sm:border-4 border-[#0CC0DF] text-[#0CC0DF] shadow-lg shadow-[#0CC0DF]/30'
+                                : 'border border-white/30 text-white'} 
+                before:content-[""] before:absolute before:inset-0 before:rounded-2xl sm:before:rounded-[3rem] 
                 before:bg-gradient-to-r before:from-gray-900 before:to-gray-800 before:z-[-1]
                 hover:border-[#0CC0DF]/60 transition-colors duration-300`}
                     >
@@ -242,28 +229,28 @@ export default function Marketplace() {
             </div>
 
             {/* Content Sections */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-8 px-4 sm:px-0">
                 {selectedTab === 'nfts' && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         {nfts.map((nft) => (
                             <motion.div
                                 key={nft.id}
-                                whileHover={{ scale: 1.05 }}
+                                whileHover={{ scale: 1.02 }}
                                 className="bg-gradient-to-b from-[#0CC0DF]/10 to-transparent backdrop-blur-sm 
                                  rounded-xl p-4 border border-[#0CC0DF]/20"
                             >
-                                <div className="relative h-96 mb-4 rounded-lg overflow-hidden">
+                                <div className="relative h-48 sm:h-96 mb-4 rounded-lg overflow-hidden">
                                     <Image src={nft.image} alt={nft.name} fill className="object-cover" />
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{nft.name}</h3>
-                                <p className="text-gray-300 mb-4">{nft.description}</p>
+                                <h3 className="text-lg sm:text-xl font-bold mb-2">{nft.name}</h3>
+                                <p className="text-sm sm:text-base text-gray-300 mb-4">{nft.description}</p>
                                 <div className="flex justify-between items-center">
-                                    <span className="text-[#0CC0DF]">{nft.price} {nft.currency}</span>
+                                    <span className="text-[#0CC0DF] text-sm sm:text-base">{nft.price} {nft.currency}</span>
                                     <button
                                         onClick={() => handleNFTBuy(nft)}
-                                        className="bg-[#0CC0DF] px-4 py-2 rounded-lg flex items-center gap-2"
+                                        className="bg-[#0CC0DF] px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 text-sm sm:text-base"
                                     >
-                                        <FaShoppingCart />
+                                        <FaShoppingCart size={16} />
                                         Buy Now
                                     </button>
                                 </div>
@@ -275,26 +262,26 @@ export default function Marketplace() {
                 {selectedTab === 'deals' && (
                     <>
                         {/* Crypto Section */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                             {cryptoAssets.map((asset) => (
                                 <motion.div
                                     key={asset.symbol}
-                                    whileHover={{ scale: 1.05 }}
+                                    whileHover={{ scale: 1.02 }}
                                     onClick={() => handleCryptoClick(asset)}
                                     className="bg-gradient-to-b from-[#0CC0DF]/10 to-transparent backdrop-blur-sm 
-                                     rounded-xl p-6 border border-[#0CC0DF]/20 cursor-pointer"
+                                     rounded-xl p-4 sm:p-6 border border-[#0CC0DF]/20 cursor-pointer"
                                 >
-                                    <div className="flex items-center gap-4 mb-4">
+                                    <div className="flex items-center gap-3 sm:gap-4 mb-4">
                                         {asset.icon}
                                         <div>
-                                            <h3 className="text-xl font-bold">{asset.name}</h3>
-                                            <p className="text-gray-300">{asset.symbol}</p>
+                                            <h3 className="text-base sm:text-xl font-bold">{asset.name}</h3>
+                                            <p className="text-sm text-gray-300">{asset.symbol}</p>
                                         </div>
                                     </div>
                                     <div className="flex justify-between items-center">
                                         <div>
-                                            <p className="text-sm text-gray-300">Exchange Rate</p>
-                                            <p className="text-xl font-bold">1 MTL = <span className="text-[#0CC0DF]">{asset.price} {asset.symbol}</span> </p>
+                                            <p className="text-xs sm:text-sm text-gray-300">Exchange Rate</p>
+                                            <p className="text-base sm:text-xl font-bold">1 MTL = <span className="text-[#0CC0DF]">{asset.price} {asset.symbol}</span></p>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -302,29 +289,29 @@ export default function Marketplace() {
                         </div>
 
                         {/* Vouchers Section */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                             {vouchers.map((voucher) => (
                                 <motion.div
                                     key={voucher.id}
-                                    whileHover={{ scale: 1.05 }}
+                                    whileHover={{ scale: 1.02 }}
                                     className="bg-gradient-to-b from-[#0CC0DF]/10 to-transparent backdrop-blur-sm 
                                  rounded-xl p-4 border border-[#0CC0DF]/20"
                                 >
-                                    <div className="relative h-72 mb-4 rounded-lg overflow-hidden">
+                                    <div className="relative h-48 sm:h-72 mb-4 rounded-lg overflow-hidden">
                                         <Image src={voucher.image} alt={voucher.title} fill className="object-cover" />
-                                        <div className="absolute top-2 right-2 bg-[#0CC0DF] px-3 py-1 rounded-full">
+                                        <div className="absolute top-2 right-2 bg-[#0CC0DF] px-2 sm:px-3 py-1 rounded-full text-sm">
                                             {voucher.discount} OFF
                                         </div>
                                     </div>
-                                    <h3 className="text-xl font-bold mb-2">{voucher.title}</h3>
-                                    <p className="text-gray-300 mb-4">Valid until: {voucher.validUntil}</p>
+                                    <h3 className="text-lg sm:text-xl font-bold mb-2">{voucher.title}</h3>
+                                    <p className="text-sm sm:text-base text-gray-300 mb-4">Valid until: {voucher.validUntil}</p>
                                     <div className="flex justify-between items-center">
-                                        <span className="text-[#0CC0DF]">${voucher.price}</span>
+                                        <span className="text-[#0CC0DF] text-sm sm:text-base">${voucher.price}</span>
                                         <button
                                             onClick={() => handleClaim(voucher)}
-                                            className="bg-[#0CC0DF] px-4 py-2 rounded-lg flex items-center gap-2"
+                                            className="bg-[#0CC0DF] px-3 sm:px-4 py-2 rounded-lg flex items-center gap-2 text-sm sm:text-base"
                                         >
-                                            <FaTicketAlt />
+                                            <FaTicketAlt size={16} />
                                             Claim
                                         </button>
                                     </div>
