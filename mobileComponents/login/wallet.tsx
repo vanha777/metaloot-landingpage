@@ -10,6 +10,7 @@ import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useMTL } from '../../app/context/MtlContext'
+
 interface NFT {
     id: string
     name: string
@@ -121,16 +122,6 @@ export default function Wallet() {
     };
 
     useEffect(() => {
-        // const checkAndConnectWallet = async () => {
-        //     const address = await connectWallet();
-        //     if (address) {
-        //         setUser({
-        //             publicKey: address.publicKey,
-        //             mtl: address.mtl
-        //         });
-        //     }
-        // }
-        // checkAndConnectWallet();
         const checkMobile = () => {
             setIsMobile(window.innerWidth < 768);
         }
@@ -141,13 +132,13 @@ export default function Wallet() {
     }, [])
 
     return (
-        <div className="p-6 space-y-8">
+        <div className="p-3 md:p-6 space-y-6 md:space-y-8">
             {/* MTL Card Section */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="relative h-72 w-full max-w-3xl mx-auto rounded-[3rem] overflow-hidden backdrop-blur-sm
-                          border-4 border-[#0CC0DF] text-white shadow-lg shadow-[#0CC0DF]/30"
+                className="relative h-60 md:h-72 w-full max-w-3xl mx-auto rounded-2xl md:rounded-[3rem] overflow-hidden backdrop-blur-sm
+                          border-2 md:border-4 border-[#0CC0DF] text-white shadow-lg shadow-[#0CC0DF]/30"
             >
                 <div className="absolute inset-0">
                     {/* Background gradient */}
@@ -164,17 +155,17 @@ export default function Wallet() {
                     </div>
                 </div>
 
-                <div className="absolute inset-0 p-8 flex flex-col justify-between">
+                <div className="absolute inset-0 p-4 md:p-8 flex flex-col justify-between">
                     {/* Card Header */}
                     <div className="flex justify-between items-start">
                         <div>
-                            <h3 className="text-white text-3xl font-bold">$MTL</h3>
-                            <p className="text-white/70 text-lg">MetaLoot Token</p>
+                            <h3 className="text-white text-2xl md:text-3xl font-bold">$MTL</h3>
+                            <p className="text-white/70 text-base md:text-lg">MetaLoot Token</p>
                         </div>
                         <img
                             src="/coin.png"
                             alt="MetaLoot Token"
-                            className="w-16 h-16 object-contain"
+                            className="w-12 h-12 md:w-16 md:h-16 object-contain"
                             style={{
                                 filter: "drop-shadow(0 0 10px rgba(255,255,255,0.5))"
                             }}
@@ -182,21 +173,21 @@ export default function Wallet() {
                     </div>
 
                     {/* Card Number */}
-                    <div className="space-y-6">
+                    <div className="space-y-4 md:space-y-6">
                         <div className="flex items-center gap-2">
-                            <p className="font-mono text-white text-xl tracking-wider">
-                              {publicKey?.toBase58()}
+                            <p className="font-mono text-white text-sm md:text-xl tracking-wider truncate">
+                                {publicKey?.toBase58()}
                             </p>
                         </div>
 
                         {/* Balance and Name */}
                         <div className="flex justify-between items-end">
                             <div>
-                                <p className="text-white/70 text-lg">Balance</p>
-                                <p className="text-white text-2xl font-bold">${balance} MTL</p>
+                                <p className="text-white/70 text-base md:text-lg">Balance</p>
+                                <p className="text-white text-xl md:text-2xl font-bold">${balance} MTL</p>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="text-white text-xl font-bold">METALOOT</span>
+                                <span className="text-white text-lg md:text-xl font-bold">METALOOT</span>
                             </div>
                         </div>
                     </div>
@@ -205,24 +196,24 @@ export default function Wallet() {
 
             {/* NFTs Section */}
             <div>
-                <h2 className="text-2xl font-bold mb-4">Your NFTs</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Your NFTs</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                     {nfts.map((nft) => (
                         <motion.div
                             key={nft.id}
-                            whileHover={{ scale: 1.05 }}
+                            whileHover={{ scale: 1.02 }}
                             className="bg-gradient-to-b from-[#0CC0DF]/10 to-transparent backdrop-blur-sm 
-                         rounded-xl p-4 border border-[#0CC0DF]/20"
+                                     rounded-lg md:rounded-xl p-3 md:p-4 border border-[#0CC0DF]/20"
                         >
-                            <div className="relative h-96 mb-4 rounded-lg overflow-hidden">
+                            <div className="relative h-64 md:h-96 mb-3 md:mb-4 rounded-lg overflow-hidden">
                                 <Image src={nft.image} alt={nft.name} fill className="object-cover" />
                             </div>
-                            <h3 className="text-xl font-bold mb-2">{nft.name}</h3>
-                            <div className="flex justify-between items-center">
-                                <span className="text-[#0CC0DF]">{nft.description}</span>
-                                <div className="flex gap-2">
-                                    <button className="bg-[#0CC0DF] px-4 py-2 rounded-lg">Trade</button>
-                                    <button className="bg-gray-800 px-4 py-2 rounded-lg border border-[#0CC0DF]/20">View</button>
+                            <h3 className="text-lg md:text-xl font-bold mb-2">{nft.name}</h3>
+                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-0">
+                                <span className="text-[#0CC0DF] text-sm md:text-base">{nft.description}</span>
+                                <div className="flex gap-2 w-full md:w-auto">
+                                    <button className="flex-1 md:flex-none bg-[#0CC0DF] px-4 py-2 rounded-lg text-sm md:text-base">Trade</button>
+                                    <button className="flex-1 md:flex-none bg-gray-800 px-4 py-2 rounded-lg border border-[#0CC0DF]/20 text-sm md:text-base">View</button>
                                 </div>
                             </div>
                         </motion.div>

@@ -1,5 +1,5 @@
 'use client'
-import Dashboard from '../../components/login/dashboard'
+import Dashboard from '../../mobileComponents/login/dashboard'
 import { WalletConnectionProvider } from '../context/WalletConnectionProvider'
 import { MTLProvider } from '../context/MtlContext'
 

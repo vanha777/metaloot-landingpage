@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
-import Hero from '@/components/Hero'
-import Satements from '@/components/statements'
-import Roadmap from '@/components/Roadmap'
-import Contact from '@/components/Contact'
-import About from '@/components/about'
-import BigStatement from '@/components/BigStatement'
-import Coin from '@/components/Coin'
+import Hero from '@/mobileComponents/Hero'
+import Satements from '@/mobileComponents/statements'
+import Roadmap from '@/mobileComponents/Roadmap'
+import Contact from '@/mobileComponents/Contact'
+import About from '@/mobileComponents/about'
+import BigStatement from '@/mobileComponents/BigStatement'
+import Coin from '@/mobileComponents/Coin'
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false)
 
