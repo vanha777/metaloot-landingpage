@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { Auth } from '../auth'
 import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, Connection, PublicKey } from '@solana/web3.js';
-interface NFT {
+export interface NFT {
     id: string
     name: string
     image: string
@@ -13,22 +13,33 @@ interface NFT {
     currency: string
 }
 
-interface CryptoRate {
+export interface CryptoAsset {
+    id: string
+    symbol: string
+    name: string
+    balance: number
+    price: number
+    icon: JSX.Element
+}
+
+export interface Voucher {
+    id: string
+    name: string
+    discount: string
+    validUntil: string
+    image: string
+    price: number
+    e_gift: string
+}
+
+export interface CryptoRate {
     symbol: string
     name: string
     rate: number // Exchange rate to MTL
 }
 
-interface Voucher {
-    id: string
-    title: string
-    discount: string
-    validUntil: string
-    image: string
-    price: number // In MTL
-}
 
-interface Game {
+export interface Game {
     id: string
     title: string
     image: string
@@ -36,8 +47,11 @@ interface Game {
     rewards: number
     description: string
     link: string
+    rank: number
     developer?: string
     publisher?: string
+    played?: number
+    rewarded?: number
     releaseDate?: string
     genre?: string
     intro?: string
@@ -46,11 +60,11 @@ interface Game {
     models?: {
         playToEarn?: {
             enabled: boolean
-            price?: string
+            price: number
         }
         stakeToEarn?: {
             enabled: boolean
-            price?: string
+            price: string
         }
     }
 }
@@ -66,6 +80,7 @@ interface MTLContextType {
     fetchTokenBalance: () => Promise<void>
     fetchHistoryTransactions: () => Promise<void>
     fetchGiftCards: () => Promise<void>
+    fetchGames: (platform?: 'desktop' | 'mobile' | 'console') => Promise<void>
 }
 interface Transaction {
     gameTitle: string
@@ -85,7 +100,8 @@ const MTLContext = createContext<MTLContextType>({
     historyTransactions: [],
     fetchTokenBalance: async () => { },
     fetchHistoryTransactions: async () => { },
-    fetchGiftCards: async () => { }
+    fetchGiftCards: async () => { },
+    fetchGames: async () => { }
 })
 
 const TOKEN_MINT_ADDRESS = "813b3AwivU6uxBicnXdZsCNrfzJy4U3Cr4ejwvH4V1Fz";
@@ -121,9 +137,24 @@ export function MTLProvider({ children }: { children: ReactNode }) {
         const supabase = await Auth;
         const { data, error } = await supabase
             .from('gift_card')
-            .select('*');
+            .select('*')
+            .is('claimed_by', null);
         if (data) {
             setMarketplaceVouchers(data)
+        }
+    }
+
+    const fetchGames = async (platform?: 'desktop' | 'mobile' | 'console') => {
+        const supabase = await Auth;
+        let query = supabase.from('games').select('*');
+        
+        if (platform) {
+            query = query.eq('platform', platform);
+        }
+        
+        const { data, error } = await query;
+        if (data) {
+            setGames(data)
         }
     }
 
@@ -203,14 +234,13 @@ export function MTLProvider({ children }: { children: ReactNode }) {
                 setBalance(token);
 
                 await fetchGiftCards();
+                await fetchGames();
 
                 // if (user) {
                 //     // Fetch user's NFTs
                 //     const nftResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/nfts/${user.id}`)
                 //     const nftData = await nftResponse.json()
                 //     setOwnedNFTs(nftData)
-
-
 
                 //     // Fetch marketplace vouchers
                 //     const voucherResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/marketplace/vouchers`)
@@ -235,6 +265,7 @@ export function MTLProvider({ children }: { children: ReactNode }) {
             fetchGiftCards,
             fetchHistoryTransactions,
             fetchTokenBalance,
+            fetchGames,
             balance,
             ownedNFTs,
             marketplaceNFTs,
