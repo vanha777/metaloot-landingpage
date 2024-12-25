@@ -2,7 +2,12 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { FaDesktop, FaMobile, FaGamepad, FaGlobe, FaTimes, FaSearch } from 'react-icons/fa'
+import { FaDesktop, FaMobile, FaGamepad, FaGlobe, FaTimes, FaSearch, } from 'react-icons/fa'
+import { SiApplearcade, SiTindie, SiRockstargames } from "react-icons/si";
+import { PiPlanetFill } from "react-icons/pi";
+import { GiCardAceHearts } from "react-icons/gi";
+import { MdSportsFootball } from "react-icons/md";
+import { FaSearchengin } from "react-icons/fa";
 import { useState, useEffect } from 'react'
 import Details from './details'
 import { transferSplToken } from "../../app/utilities/transfer";
@@ -11,11 +16,11 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { Game, useMTL } from '../../app/context/MtlContext'
 
 const platformIcons = {
-    all: <FaGlobe size={32} />,
-    arcade: <FaDesktop size={32} />,
-    rpg: <FaMobile size={32} />,
-    indie: <FaMobile size={32} />,
-    card: <FaGamepad size={32} />
+    all: <PiPlanetFill size={32} />,
+    arcade: <SiApplearcade size={32} />,
+    rpg: <SiRockstargames size={32} />,
+    indie: <MdSportsFootball size={32} />,
+    card: <GiCardAceHearts size={32} />
 }
 
 export default function GamesDashboard() {
@@ -169,20 +174,39 @@ export default function GamesDashboard() {
             <div className="flex flex-col gap-4 mb-8">
                 <div className="flex gap-4 p-4 overflow-x-auto">
                     {Object.entries(platformIcons).map(([genre, icon]) => (
+                        // <motion.button
+                        //     key={genre}
+                        //     whileHover={{ scale: 1.05 }}
+                        //     whileTap={{ scale: 0.95 }}
+                        //     onClick={() => setSelectedGenre(genre as 'arcade' | 'rpg' | 'indie' | 'card' | 'all')}
+                        //     className={`px-6 sm:px-24 py-4 sm:py-16 rounded-2xl sm:rounded-[3rem] backdrop-blur-sm relative flex-1
+                        //         ${selectedGenre === genre
+                        //             ? 'border-2 sm:border-4 border-[#0CC0DF] text-[#0CC0DF] shadow-lg shadow-[#0CC0DF]/30'
+                        //             : 'border border-white/30 text-white'} 
+                        //         before:content-[""] before:absolute before:inset-0 before:rounded-2xl sm:before:rounded-[3rem] 
+                        //         before:bg-gradient-to-r before:from-gray-900 before:to-gray-800 before:z-[-1]
+                        //         hover:border-[#0CC0DF]/60 transition-colors duration-300`}
+                        // >
+                        //     <div className="flex justify-center">
+                        //         {icon}
+                        //     </div>
+                        // </motion.button>
                         <motion.button
                             key={genre}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => setSelectedGenre(genre as 'arcade' | 'rpg' | 'indie' | 'card' | 'all')}
-                            className={`px-6 py-4 rounded-[3rem] backdrop-blur-sm relative flex-shrink-0
-                                ${selectedGenre === genre
-                                    ? 'border-4 border-[#0CC0DF] text-[#0CC0DF] shadow-lg shadow-[#0CC0DF]/30'
-                                    : 'border-2 border-white/30 text-white'} 
-                                before:content-[""] before:absolute before:inset-0 before:rounded-[3rem] 
-                                before:bg-gradient-to-r before:from-gray-900 before:to-gray-800 before:z-[-1]
-                                hover:border-[#0CC0DF]/60 transition-colors duration-300`}
+                            className={`px-16 sm:px-40 py-4 sm:py-16 rounded-2xl sm:rounded-[3rem] backdrop-blur-sm relative flex-1
+                            ${selectedGenre === genre
+                                    ? 'border-2 sm:border-4 border-[#0CC0DF] text-[#0CC0DF] shadow-lg shadow-[#0CC0DF]/30'
+                                    : 'border border-white/30 text-white'} 
+                            before:content-[""] before:absolute before:inset-0 before:rounded-2xl sm:before:rounded-[3rem] 
+                            before:bg-gradient-to-r before:from-gray-900 before:to-gray-800 before:z-[-1]
+                            hover:border-[#0CC0DF]/60 transition-colors duration-300`}
                         >
-                            {icon}
+                            <div className="flex justify-center">
+                                {icon}
+                            </div>
                         </motion.button>
                     ))}
                 </div>
@@ -197,7 +221,7 @@ export default function GamesDashboard() {
                             focus:outline-none focus:border-[#0CC0DF] text-white placeholder-gray-400
                             transition-colors duration-300"
                     />
-                    <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <FaSearchengin className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 </div>
             </div>
 
